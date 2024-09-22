@@ -7,18 +7,17 @@
     <link href="/dist/css/tailwind.css" rel="stylesheet">
 </head>
 <body class="bg-gradient-to-b from-[#17212a] to-[#2c3e50]">
-    <section class="h-[65vh] w-screen flex">
-        <div style="background-image: url('/dist/img/logo.png')" class="h-full w-screen flex items-center justify-center rounded-lg bg-cover bg-center">
+    <section class="h-[70vh] w-screen flex">
+        <div style="background-image: url('/dist/img/logo.png')" class="h-5/6 w-screen flex items-center justify-center rounded-lg bg-cover bg-center">
             
         </div>        
     </section>
 
     <!-- Introduction Section -->
     <section class="h-auto w-screen flex flex-wrap items-center justify-center p-4">
-        <div class="w-full md:w-10/12 lg:w-8/12 h-auto md:h-auto flex flex-wrap md:flex-nowrap items-center justify-center">
-            <div class="h-full w-full md:w-6/12 flex justify-center gap-4 md:gap-8 p-4">
-
-                <div class="h-full w-3/4 rounded-lg shadow-[0px_6px_30px_rgba(0,0,0,0.9)]">
+        <div class="w-full md:w-10/12 lg:w-8/12 h-auto md:h-auto flex flex-wrap md:flex-nowrap items-end justify-center">
+            <div class="min-h-full w-full md:w-6/12 gap-4 md:gap-8 p-4 flex items-center justify-center">
+                <div class="h-full w-3/4  rounded-lg shadow-[0px_6px_30px_rgba(0,0,0,0.9)] ">
                     <img src="<%= presentation.image %>" alt="Profile picture" class="rounded-xl shadow-lg">
                 </div>
             </div>
@@ -33,7 +32,7 @@
                     <h1 class="text-right italic text-gray-100">- Charles Kettering</h1>
                 </div>
 
-                <div class="rounded-lg h-auto md:h-2/5 w-full p-10 ">
+                <div class="rounded-lg h-auto md:h-2/5 w-full p-10 border-2 border-gray-600 hover:bg-[#2c3e50]">
 
                     <p class="text-sm md:text-lg text-gray-300 font-bold">
                         <%= presentation.description %>
