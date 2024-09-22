@@ -1,0 +1,35 @@
+# Node modules
+node_modules/
+
+# Build output
+dist/*
+!dist/img/
+dist/css/tailwind.css
+!dist/css/
+
+build/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+
+# Compiled JavaScript files and source maps in src directory
+/src/**/*.js
+/src/**/*.js.map
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Coverage reports
+coverage/
+
+# Temporary files
+tmp/
+temp/
+cache/
+
+# OS or Editor specific files
+.DS_Store
+Thumbs.db

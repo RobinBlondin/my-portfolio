@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link href="/dist/css/tailwind.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-b from-[#17212a] to-[#2c3e50]">
+    <section class="h-[65vh] w-screen flex">
+        <div style="background-image: url('/dist/img/logo.png')" class="h-full w-screen flex items-center justify-center rounded-lg bg-cover bg-center">
+            
+        </div>        
+    </section>
+
+    <!-- Introduction Section -->
+    <section class="h-auto w-screen flex flex-wrap items-center justify-center p-4">
+        <div class="w-full md:w-10/12 lg:w-8/12 h-auto md:h-auto flex flex-wrap md:flex-nowrap items-center justify-center">
+            <div class="h-full w-full md:w-6/12 flex justify-center gap-4 md:gap-8 p-4">
+
+                <div class="h-full w-3/4 rounded-lg shadow-[0px_6px_30px_rgba(0,0,0,0.9)]">
+                    <img src="<%= presentation.image %>" alt="Profile picture" class="rounded-xl shadow-lg">
+                </div>
+            </div>
+
+            <div class="h-full w-full md:w-6/12 flex flex-col justify-center gap-4 md:gap-8 p-4">
+
+                <div class="rounded-lg h-auto md:h-2/5 w-full p-10">
+                    <h1 class="text-3xl md:text-3xl font-bold text-gray-600">A problem</h1>
+                    <h1 class="text-4xl md:text-5xl font-bold text-[#9a3686]">well stated</h1>
+                    <h1 class="text-2xl md:text-4xl font-bold text-gray-400 text-center">is a problem</h1>
+                    <h1 class="text-4xl md:text-6xl font-bold text-[#f0ed13] text-left">half solved</h1>
+                    <h1 class="text-right italic text-gray-100">- Charles Kettering</h1>
+                </div>
+
+                <div class="rounded-lg h-auto md:h-2/5 w-full p-10 ">
+
+                    <p class="text-sm md:text-lg text-gray-300 font-bold">
+                        <%= presentation.description %>
+                    </p>
+                    
+                </div>
+            </div>
+        </div>        
+    </section>
+    
+
+    <!-- Project Section -->
+    <section class="h-[80vh] w-screen flex flex-col items-center justify-center mt-[5vh]">
+        <h1 class="text-gray-400 text-4xl font-bold mb-[-10vh]">PROJECTS</h1>
+        <div class="h-full w-full flex flex-row items-center justify-center">
+            <div class="w-1/12 flex items-center justify-center">
+                <img id="scrollLeftButton" src="/dist/img/left-arrow.png" class="hover:cursor-pointer hover:scale-[1.10] transition-transform duration-200" alt="">
+            </div>
+            <div id="scrollContainer" class="w-full h-3/4 md:h-6/6 lg:h-5/6 flex items-center rounded-lg gap-12 overflow-x-hidden overflow-y-hidden p-8">
+                <% projects.forEach(project => { %>
+                    <div 
+                        style="background-image: url('<%= project.image %>');" 
+                        class="h-5/6 min-w-[100vw] md:min-w-[80vw] lg:min-w-[40vw] bg-cover rounded-lg shadow-lg hover:cursor-pointer hover:scale-[1.05] transition-transform duration-200" 
+                        onclick="window.location.href='<%= project.link %>'">
+                    </div>
+                <% }) %>
+            </div>            
+            <div class="w-1/12 flex items-center justify-center">
+                <img id="scrollRightButton" src="/dist/img/right-arrow.png" class="hover:cursor-pointer hover:scale-[1.10] transition-transform duration-200"  alt="">
+            </div>
+        </div>        
+    </section>
+
+    <!-- Skills Section -->
+    <section class="h-screen w-screen flex items-center justify-center">
+        <div class="w-10/12 md:w-12/12 lg:w-10/12 h-5/6 md:h-6/6 lg:h-5/6 flex items-center justify-center bg-[#17212a] rounded-lg">
+            <h1 class="text-4xl font-bold text-center text-white">Skills section</h1>
+        </div>        
+    </section>
+
+    <!-- Contact Section -->
+    <section class="h-screen w-screen flex items-center justify-center">
+        <div class="w-10/12 md:w-12/12 lg:w-10/12 h-5/6 md:h-6/6 lg:h-5/6 flex items-center justify-center bg-[#17212a] rounded-lg">
+            <h1 class="text-4xl font-bold text-center text-white">Contact section</h1>
+        </div>        
+    </section>
+
+    <script>
+        const scrollContainer = document.getElementById('scrollContainer');
+        const scrollLeftButton = document.getElementById('scrollLeftButton');
+        const scrollRightButton = document.getElementById('scrollRightButton');
+
+        let scrollInterval;
+
+        function startScrolling(direction) {
+            const scrollAmount = 1000;
+            scrollInterval = setInterval(() => {
+                scrollContainer.scrollBy({
+                    left: direction * scrollAmount,
+                    behavior: 'smooth'
+                });
+            }, 10);
+        }
+
+        function stopScrolling() {
+            clearInterval(scrollInterval);
+        }
+
+        scrollLeftButton.addEventListener('mouseenter', () => startScrolling(-1));
+        scrollLeftButton.addEventListener('mousedown', () => startScrolling(-1));
+        scrollLeftButton.addEventListener('mouseup', stopScrolling);
+        scrollLeftButton.addEventListener('mouseleave', stopScrolling);
+        
+        scrollRightButton.addEventListener('mouseenter', () => startScrolling(1));
+        scrollRightButton.addEventListener('mousedown', () => startScrolling(1));
+        scrollRightButton.addEventListener('mouseup', stopScrolling);
+        scrollRightButton.addEventListener('mouseleave', stopScrolling);
+
+    </script>
+</body>
+
+</html>
