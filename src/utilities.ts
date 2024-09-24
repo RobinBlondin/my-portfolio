@@ -18,12 +18,11 @@ export function initializeDatabase() {
 }
 
 export async function addAdminUser(userRepo: Repository<User>) {
-    async function saveUser() {
         const users = await userRepo.findBy({ name: 'admin' });
     
         let user;
         if(users.length === 0) {
-            user = new User('admin', 'hejsan123');
+            user = new User('admin', '$2y$10$i3jO4C6aAHhjhj6bWnuf3.1Q/c/x3HtiJDTHV18jO2QLEpGirzkpG');
             try {
                 await userRepo.save(user);
                 console.log('User saved');
@@ -33,14 +32,13 @@ export async function addAdminUser(userRepo: Repository<User>) {
         } else {
             console.log('User already exists');
         }    
-    }
 }
 
 export function startServer(app: Express) {
     const PORT = process.env.PORT || 3000;
 
     app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running`);
     });
 }
 
@@ -62,5 +60,5 @@ export function setUploadsStorage() {
 
 export function setPathOfFile(req: any) {
     const fileName = req.file?.originalname;
-    return`http://localhost:8080/uploads/${fileName}`;
+    return `uploads/${fileName}`;
 }
