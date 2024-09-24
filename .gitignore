@@ -33,3 +33,5 @@ cache/
 # OS or Editor specific files
 .DS_Store
 Thumbs.db
+
+/uploads/**/*
