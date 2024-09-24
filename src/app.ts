@@ -34,7 +34,7 @@ app.get('/', async (req, res) => {
     if(presentations.length > 0) {
         presentation = presentations[0];
     } else {
-        presentation = generateMockPresentation
+        presentation = generateMockPresentation();
     }
 
     const skills = (await skillRepo.find()).length === 0 ? generateMockSkill() : await skillRepo.find();
