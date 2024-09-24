@@ -1,6 +1,10 @@
 import 'dotenv/config';
 import 'reflect-metadata';
 import { DataSource } from "typeorm";
+import { User } from './entities/User';
+import { Project } from './entities/Project';
+import { Presentation } from './entities/Presentation';
+import { Skill } from './entities/Skill';
 
 const port = process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : undefined;
 
@@ -13,8 +17,7 @@ export const AppDatasource = new DataSource({
     database: process.env.DB_NAME,
     
     entities: [
-        `${__dirname}/**/entities/*.ts`,
-        `${__dirname}/**/entities/*.js`
+        User, Project, Presentation, Skill
     ],
 
     synchronize: true,
