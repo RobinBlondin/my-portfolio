@@ -6,7 +6,7 @@
     <title><%= title %></title>
     <link href="/dist/css/tailwind.css" rel="stylesheet">
 </head>
-<body class="bg-gradient-to-b from-[#17212a] to-[#2c3e50]">
+<body class="flex flex-wrap items-center justify-center bg-gradient-to-r from-[#17212a] to-[#2c3e50]">
     <section class="h-[70vh] w-screen flex">
         <div style="background-image: url('/dist/img/logo2.png')" class="h-5/6 w-screen flex items-center justify-center rounded-lg bg-cover bg-center">
             
@@ -14,11 +14,11 @@
     </section>
 
     <!-- Introduction Section -->
-    <section class="h-auto w-screen flex flex-wrap items-center justify-center p-4">
+    <section class="h-[65vh] w-screen flex flex-wrap items-center justify-center p-4">
         <div class="w-full md:w-10/12 lg:w-8/12 h-auto md:h-auto flex flex-wrap md:flex-nowrap items-end justify-center">
             <div class="min-h-full w-full md:w-6/12 gap-4 md:gap-8 p-4 flex items-center justify-center">
                 <div class="h-full w-3/4  rounded-lg shadow-[0px_6px_30px_rgba(0,0,0,0.9)] ">
-                    <img src="<%= presentation.image %>" alt="Profile picture" class="rounded-xl shadow-lg">
+                    <img src="<%= presentation.imageUrl %>" alt="Profile picture" class="rounded-xl shadow-lg">
                 </div>
             </div>
 
@@ -45,16 +45,17 @@
     
 
     <!-- Project Section -->
-    <section class="h-[80vh] w-screen flex flex-col items-center justify-center mt-[5vh]">
+     
+    <section class="h-[70vh] w-screen flex flex-wrap items-center justify-center mt-[20vh]">
         <h1 class="text-gray-400 text-4xl font-bold mb-[-10vh]">PROJECTS</h1>
-        <div class="h-full w-full flex flex-row items-center justify-center">
+        <div class="h-full w-full flex flex-row items-center justify-center mt-[5vh]">
             <div class="w-1/12 flex items-center justify-center">
                 <img id="scrollLeftButton" src="/dist/img/left-arrow.png" class="hover:cursor-pointer hover:scale-[1.10] transition-transform duration-200" alt="">
             </div>
             <div id="scrollContainer" class="w-full h-3/4 md:h-6/6 lg:h-5/6 flex items-center rounded-lg gap-12 overflow-x-hidden overflow-y-hidden p-8">
                 <% projects.forEach(project => { %>
                     <div 
-                        style="background-image: url('<%= project.image %>');" 
+                        style="background-image: url('<%= project.imageUrl %>');" 
                         class="h-5/6 min-w-[100vw] md:min-w-[80vw] lg:min-w-[40vw] bg-cover rounded-lg shadow-lg hover:cursor-pointer hover:scale-[1.05] transition-transform duration-200" 
                         onclick="window.location.href='<%= project.link %>'">
                     </div>
@@ -66,18 +67,31 @@
         </div>        
     </section>
 
-    <!-- Skills Section -->
-    <section class="h-screen w-screen flex items-center justify-center">
-        <div class="w-10/12 md:w-12/12 lg:w-10/12 h-5/6 md:h-6/6 lg:h-5/6 flex items-center justify-center bg-[#17212a] rounded-lg">
-            <h1 class="text-4xl font-bold text-center text-white">Skills section</h1>
-        </div>        
-    </section>
-
-    <!-- Contact Section -->
-    <section class="h-screen w-screen flex items-center justify-center">
-        <div class="w-10/12 md:w-12/12 lg:w-10/12 h-5/6 md:h-6/6 lg:h-5/6 flex items-center justify-center bg-[#17212a] rounded-lg">
-            <h1 class="text-4xl font-bold text-center text-white">Contact section</h1>
-        </div>        
+    <!-- Skills & Contact Section -->
+    <section class="h-[70vh] w-[75vw] flex mt-[20vh]">
+        <div class="h-full w-full flex flex-col items-center">
+            <h1 class="text-gray-400 text-4xl font-bold">EXPERIENCE</h1>
+            <div class="w-10/12 md:w-12/12 lg:w-10/12 h-auto md:h-6/6 lg:h-auto flex flex-wrap justify-center bg-[#2c3e50] rounded-lg overflow-y-auto scrollbar-hide">
+                <% skills.forEach(skill => { %>
+                    <div class="w-[144px] h-[144px] flex flex-col items-center justify-center">
+                        <img src="<%= skill.imageUrl %>" alt="<%= skill.name %>" class="h-[96px] w-[96px]">
+                        <p class="text-gray-500 font-bold"><%= skill.name %></p>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+        <div class="h-full w-full flex flex-col items-center">
+            <h1 class="text-gray-400 text-4xl font-bold">CONTACT</h1>
+            <div class="w-10/12 md:w-12/12 lg:w-10/12 h-5/6 md:h-6/6 lg:h-5/6 flex items-center justify-center bg-[#2c3e50] rounded-lg ps-12">
+                <form action="/sendEmail" method="post" class="w-full h-full w-10/12 flex items-start flex-col justify-center gap-5">
+                   
+                        <input type="email" name="email" id="email" placeholder="Please enter your email adress" class="rounded-lg">
+                        <textarea name="message" id="message" placeholder="Write me something" class="rounded-lg h-1/2 w-10/12"></textarea>
+                        <button type="submit" class="rounded-lg bg-[#]">Send</button>
+                
+                </form>
+            </div>      
+        </div>   
     </section>
 
     <script>
