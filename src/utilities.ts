@@ -6,11 +6,14 @@ import path from 'path';
 import multer from 'multer';
 import fs from 'fs';
 
+const userRepo = AppDatasource.getRepository(User);
+
 
 export function initializeDatabase() {
     AppDatasource.initialize()
         .then(() => {
             console.log('Database has been initialized');
+            addAdminUser(userRepo);
         })
         .catch((error) => {
             console.error('Error initializing database', error);

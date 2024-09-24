@@ -104,6 +104,5 @@ app.post('/admin/add-skill', upload.single('image'), async (req, res) => {
 
 startServer(app)
 initializeDatabase();
-addAdminUser(userRepo);
 
 
