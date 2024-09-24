@@ -1,36 +1,105 @@
 import express from 'express';
-import { link } from 'fs';
 import path from 'path';
+import multer from 'multer';
+import { AppDatasource } from './datasource';
+import { User } from './entities/User';
+import { Project } from './entities/Project';
+import { Presentation } from './entities/Presentation';
+import { Skill } from './entities/Skill';
+import { startServer, initializeDatabase, addAdminUser, setUploadsStorage, setPathOfFile } from './utilities';
+import { In } from 'typeorm';
 
 const app = express();
 
-app.use('/dist', express.static(path.join(__dirname, '..', 'dist')));
-
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '..', 'views'));
-
+app.use('/dist', express.static(path.join(__dirname, '..', 'dist')));
+app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get('/', (req, res) => {
-    const presention = {
-        image: '/dist/img/profile.jpg',
-        name: 'Robin Blondin',
-        description: 'I am Robin Wass Blondin and I am an aspiring student of programming and web development with a main focus in the backend. My motto in life is to always be open to learn and try new things, which I think is a perfect match with a new career as a developer.'
+const userRepo = AppDatasource.getRepository(User);
+const projectRepo = AppDatasource.getRepository(Project);
+const presentationRepo = AppDatasource.getRepository(Presentation);
+const skillRepo = AppDatasource.getRepository(Skill);
+
+const upload = multer({ storage: setUploadsStorage() });
+
+// Routes
+app.get('/', async (req, res) => {
+    const presentations = await presentationRepo.findBy({name: "Robin Blondin"});
+    
+    let presentation;
+    if(presentations.length > 0) {
+        presentation = presentations[0];
     }
 
-    const project1 = { 
-        name: 'Project 1', 
-        image: '/dist/img/password_manager.png', 
-        link: 'https://github.com/RobinBlondin/password_manager',
-    };
-
-    const projects = [project1]
-    console.log(projects);
-    res.render('index', { title: 'My Portfolio', projects: projects, presentation: presention });
+    const skills = await skillRepo.find();
+    const projects = await projectRepo.find();
+    res.render('index', { title: 'My Portfolio', projects: projects, presentation: presentation, skills: skills });
 });
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+app.get('/admin', (req, res) => {
+    res.render('admin', { title: 'Admin' });
 });
+
+app.get('/admin/presentation', (req, res) => {
+    res.render('presentation', { title: 'Edit presentation' });
+});
+
+app.get('/admin/project', (req, res) => {
+    
+    res.render('project', { title: 'Add projects' });
+});
+
+app.get('/admin/skill', (req, res) => {
+    res.render('skill', { title: 'Add skills' });
+});
+
+app.post('/admin/edit-presentation', upload.single('image'), async (req, res) => {
+   
+    const { name, description} = req.body;
+    
+    const imageUrl = setPathOfFile(req);
+    const presentations = await presentationRepo.findBy({name: "Robin Blondin"});
+    const presentation = new Presentation(name, imageUrl, description);
+
+    if(presentations.length > 0) {
+        presentation.id = presentations[0].id;
+    }
+
+    presentationRepo.save(presentation);
+
+
+    res.redirect('/admin');
+});
+
+app.post('/admin/add-project', upload.single('image'), async (req, res) => {
+    const { name, link} = req.body;
+    const imageUrl = setPathOfFile(req);
+    const project = new Project(name, imageUrl, link);
+
+    await projectRepo.save(project);
+    res.redirect('/admin');
+});
+
+app.post('/admin/add-skill', upload.single('image'), async (req, res) => {
+    const name = req.body.name;
+    const imageUrl = setPathOfFile(req);
+    const skill = new Skill(name, imageUrl);
+
+    const skills = await skillRepo.findBy({name: name});
+    if(skills.length === 0) {
+        await skillRepo.save(skill);
+    }
+
+    res.redirect('/admin');
+});
+
+// End of routes
+
+startServer(app)
+initializeDatabase();
+addAdminUser(userRepo);
+
+
