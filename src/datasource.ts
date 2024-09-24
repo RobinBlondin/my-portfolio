@@ -2,7 +2,7 @@ import 'dotenv/config';
 import 'reflect-metadata';
 import { DataSource } from "typeorm";
 
-const port = process.env.DB_PORT as number | undefined;
+const port = process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : undefined;
 
 export const AppDatasource = new DataSource({
     type: "postgres",
@@ -13,8 +13,11 @@ export const AppDatasource = new DataSource({
     database: process.env.DB_NAME,
     
     entities: [
-        `${__dirname}/**/entities/*.ts`
+        `${__dirname}/**/entities/*.ts`,
+        `${__dirname}/**/entities/*.js`
     ],
+
     synchronize: true,
-    logging: true
+    logging: true,
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
 });
