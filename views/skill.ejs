@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><% title %></title>
+    <link rel="stylesheet" href="/dist/css/tailwind.css">
+</head>
+<body class="h-screen w-screen flex flex-wrap items-center justify-center bg-gradient-to-r from-[#17212a] to-[#2c3e50]">
+    <div class="flex flex-col items-center justify-center gap-6">
+        <h1 class="text-3xl text-gray-400">Add skill</h1>
+        <form action="/admin/add-skill" method="post" enctype="multipart/form-data">
+            <div class="flex flex-col justify-center gap-4">
+                <input type="text" name="name" placeholder="What skill do you want to add?" class="min-h-[50px] min-w-[200px] rounded-lg bg-[#2c3e50] text-gray-200 p-4">
+                <div class="flex flex-col items-center justify-center gap-6">
+                    <input type="file" name="image" id="fileInput" accept=".png, .jpg, .jpeg" class="hidden">
+                    <label for="fileInput" class="min-h-[50px] min-w-[200px] max-w-[200px] rounded-lg bg-[#3498db] text-white text-center cursor-pointer flex items-center justify-center">
+                        Choose a logo
+                    </label>
+                    <button type="submit" class="min-h-[50px] min-w-[200px] rounded-lg bg-[#27ae60] text-gray-200 text-center">Save</button>
+                </div>
+            </div>
+        </form>
+        <a href="/admin" class="flex items-center justify-center min-h-[50px] min-w-[200px] rounded-lg bg-[#e74c3c] text-gray-200 text-center">Back</a>
+    </div>
+</body>
+</html>
