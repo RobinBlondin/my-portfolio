@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+import tailWindScrollbar from 'tailwind-scrollbar';
 
 export const mode = "jit";
 
@@ -22,6 +23,6 @@ export const theme = {
   },
 };
 export const plugins = [
-  require('tailwind-scrollbar')({ nocompatible: true }),
+  tailWindScrollbar({ nocompatible: true }),
 ];
 
