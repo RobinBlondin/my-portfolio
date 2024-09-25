@@ -6,35 +6,34 @@
     <title><%= title %></title>
     <link href="/dist/css/tailwind.css" rel="stylesheet">
 </head>
-<body class="flex flex-wrap items-center justify-center bg-gradient-to-r from-[#17212a] to-[#2c3e50]">
-    <section class="h-[70vh] w-screen flex">
-        <div style="background-image: url('/dist/img/logo2.png')" class="h-5/6 w-screen flex items-center justify-center rounded-lg bg-cover bg-center">
-            
+<body class="flex flex-wrap items-center justify-center bg-gradient-to-r from-[#212a31] to-[#2e3944] px-7">
+    <section class="h-auto w-screen flex items-center justify-center">
+        <div class="h-[30vh] md:h-[65vh] screen flex items-center justify-center">
+            <img src="/dist/img/logo2.png" alt="Profile picture" class="">
+                </div>
         </div>        
     </section>
 
     <!-- Introduction Section -->
-    <section class="h-[65vh] w-screen flex flex-wrap items-center justify-center p-4">
-        <div class="w-full md:w-10/12 lg:w-8/12 h-auto md:h-auto flex flex-wrap md:flex-nowrap items-end justify-center">
-            <div class="min-h-full w-full md:w-6/12 gap-4 md:gap-8 p-4 flex items-center justify-center">
-                <div class="h-full w-3/4  rounded-lg shadow-[0px_6px_30px_rgba(0,0,0,0.9)] ">
-                    <img src="<%= presentation.imageUrl %>" alt="Profile picture" class="rounded-xl shadow-lg">
+    <section class="h-auto w-screen flex flex-wrap items-center justify-center p-4 mt-[10vh] xxl:mt-[20vh]">
+        <div class="w-full md:w-10/12 lg:w-8/12 h-[65vh] flex flex-wrap lg:flex-nowrap items-end justify-center">
+                <div class="flex items-center justify-center">
+                    <img src="<%= presentation.imageUrl %>" alt="Profile picture" class="rounded-xl h-3/4 w-3/4 rounded-lg shadow-[0px_6px_30px_rgba(0,0,0,0.9)] ">
                 </div>
-            </div>
 
-            <div class="h-full w-full md:w-6/12 flex flex-col justify-center gap-4 md:gap-8 p-4">
+            <div class="h-[65vh] w-screen md:w-3/4 flex flex-col items-center justify-center gap-4 gap-8 p-4">
 
-                <div class="rounded-lg h-auto md:h-2/5 w-full p-10">
-                    <h1 class="text-3xl md:text-3xl font-bold text-gray-600">A problem</h1>
+                <div class="rounded-lg h-1/2 md:h-2/5 w-screen md:w-full p-10">
+                    <h1 class="text-3xl md:text-3xl font-bold text-[#748d92]">A problem</h1>
                     <h1 class="text-4xl md:text-5xl font-bold text-[#9a3686]">well stated</h1>
                     <h1 class="text-2xl md:text-4xl font-bold text-gray-400 text-center">is a problem</h1>
                     <h1 class="text-4xl md:text-6xl font-bold text-[#f0ed13] text-left">half solved</h1>
-                    <h1 class="text-right italic text-gray-100">- Charles Kettering</h1>
+                    <h1 class="text-right italic text-[#d3d9d4]">- Charles Kettering</h1>
                 </div>
 
-                <div class="rounded-lg h-auto md:h-2/5 w-full p-10 border-2 border-gray-600 hover:bg-[#2c3e50]">
+                <div class="rounded-lg h-auto w-10/12 md:w-full p-4 border-2 border-[#748d92] hover:bg-[#2c3e50]">
 
-                    <p class="text-sm md:text-lg text-gray-300 font-bold">
+                    <p class="text-sm md:text-lg text-[#d3d9d4] font-bold">
                         <%= presentation.description %>
                     </p>
                     
@@ -43,54 +42,48 @@
         </div>        
     </section>
     
-
-    <!-- Project Section -->
+    <!-- Project & Skills Section -->
      
-    <section class="h-[70vh] w-screen flex flex-wrap items-center justify-center mt-[20vh]">
-        <h1 class="text-gray-400 text-4xl font-bold mb-[-10vh]">PROJECTS</h1>
-        <div class="h-full w-full flex flex-row items-center justify-center mt-[5vh]">
-            <div class="w-1/12 flex items-center justify-center">
-                <img id="scrollLeftButton" src="/dist/img/left-arrow.png" class="hover:cursor-pointer hover:scale-[1.10] transition-transform duration-200" alt="">
-            </div>
-            <div id="scrollContainer" class="w-full h-3/4 md:h-6/6 lg:h-5/6 flex items-center rounded-lg gap-12 overflow-x-hidden overflow-y-hidden p-8">
-                <% projects.forEach(project => { %>
-                    <div 
-                        style="background-image: url('<%= project.imageUrl %>');" 
-                        class="h-5/6 min-w-[100vw] md:min-w-[80vw] lg:min-w-[40vw] bg-cover rounded-lg shadow-lg hover:cursor-pointer hover:scale-[1.05] transition-transform duration-200" 
-                        onclick="window.location.href='<%= project.link %>'">
-                    </div>
-                <% }) %>
-            </div>            
-            <div class="w-1/12 flex items-center justify-center">
-                <img id="scrollRightButton" src="/dist/img/right-arrow.png" class="hover:cursor-pointer hover:scale-[1.10] transition-transform duration-200"  alt="">
-            </div>
-        </div>        
-    </section>
-
-    <!-- Skills & Contact Section -->
-    <section class="h-[70vh] w-[75vw] flex mt-[20vh]">
-        <div class="h-full w-full flex flex-col items-center">
-            <h1 class="text-gray-400 text-4xl font-bold">EXPERIENCE</h1>
-            <div class="w-10/12 md:w-12/12 lg:w-10/12 h-auto md:h-6/6 lg:h-auto flex flex-wrap justify-center bg-[#2c3e50] rounded-lg overflow-y-auto scrollbar-hide">
+    <section class="h-auto w-full flex flex-col items-center justify-center p-4 mt-[30vh] md:mt-[20vh]">
+        <!-- Scrollable Projects Section -->
+        <h1 class="text-[#e67e22] text-2xl font-bold">My Projects</h1>
+        <div id="scrollContainer" class="h-[45vh] w-screen flex items-center justify-start gap-12 p-8 overflow-x-auto hover:overflow-x-scroll scrollbar-thin scrollbar-thumb-[#748d92]">
+            <% projects.forEach(project => { %>
+                    <div class="h-[30vh] w-[300px] md:w-[400px] lg:w-[600px] flex-shrink-0 flex-col items-center justify-center text-center">
+                        <h1 class="text-[#748d92] font-bold mb-4"><%= project.name %></h1>
+                        <div 
+                            style="background-image: url('<%= project.imageUrl %>');" 
+                            class="w-full h-full bg-contain bg-center bg-no-repeat rounded-lg hover:cursor-pointer hover:scale-[1.05] transition-transform duration-200" 
+                            onclick="window.location.href='<%= project.link %>'">
+                        </div>
+                </div>
+            <% }) %>
+        </div>
+        
+        <div class="h-auto w-screen flex flex-col items-center justify-center mt-8 mt-[20vh]">
+            <h1 class="text-[#e67e22] font-bold text-2xl mb-4">Experience in</h1>
+            <div class="h-auto w-10/12 flex flex-wrap items-center justify-center  p-4 gap-4 border-[2px] border-[#748d92] rounded-md">
                 <% skills.forEach(skill => { %>
-                    <div class="w-[144px] h-[144px] flex flex-col items-center justify-center">
-                        <img src="<%= skill.imageUrl %>" alt="<%= skill.name %>" class="h-[96px] w-[96px]">
-                        <p class="text-gray-500 font-bold"><%= skill.name %></p>
+                    <div class="w-[110px] h-[110px] flex flex-col items-center justify-center">
+                        <img src="<%= skill.imageUrl %>" alt="<%= skill.name %>" class="h-[50px] w-[50px]">
+                        <p class="text-[#748d92] font-bold"><%= skill.name %></p>
                     </div>
                 <% }) %>
             </div>
         </div>
-        <div class="h-full w-full flex flex-col items-center">
-            <h1 class="text-gray-400 text-4xl font-bold">CONTACT</h1>
-            <div class="w-10/12 md:w-12/12 lg:w-10/12 h-5/6 md:h-6/6 lg:h-5/6 flex items-center justify-center bg-[#2c3e50] rounded-lg ps-12">
-                <form action="/sendEmail" method="post" class="w-full h-full w-10/12 flex items-start flex-col justify-center gap-5">
-                   
-                        <input type="email" name="email" id="email" placeholder="Please enter your email adress" class="rounded-lg">
-                        <textarea name="message" id="message" placeholder="Write me something" class="rounded-lg h-1/2 w-10/12"></textarea>
-                        <button type="submit" class="rounded-lg bg-[#]">Send</button>
-                
-                </form>
-            </div>      
+    </section>
+    
+    
+    <!-- Contact Section -->
+    <section class="h-auto w-screen flex flex-col items-center justify-center flext-wrap md:flex-nowrap bg-[#3d52a0] mt-[10vh] lg:mt-[20vh] rounded-t-lg">
+        <div class="min-h-[10vh] w-full flex flex-wrap lg:flex-row items-center justify-center p-4 gap-12">
+                <a style="background-image: url('/dist/img/linkedin.png')" href="https://www.linkedin.com/in/robin-wass-blondin-669683290/" class="h-[60px] w-[60px] bg-cover bg-center"></a>
+                <a style="background-image: url('/dist/img/github.png')" href="https://github.com/RobinBlondin" class="h-[50px] w-[50px]"></a>
+                <a style="background-image: url('/dist/img/email.png')" href="mailto:robin.blondin@protonmail.com" class="h-[50px] w-[50px]"></a>
+                <p class="text-[#d3d0d4] text-lg"> Robin Wass Blondin</p>
+                <p class="text-[#d3d0d4] text-lg"> +46734305510</p>
+                <p class="text-[#d3d0d4] text-lg"> robin.blondin@protonmail.com</p>
+                <a style="background-image: url('/dist/img/key.png')" href="/login" class="h-[30px] w-[30px] bg-cover bg-center"></a>
         </div>   
     </section>
 
