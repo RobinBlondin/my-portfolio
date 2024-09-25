@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/css/tailwind.css --watch",
+    "build:css": "npx tailwindcss -i ./src/styles/tailwind.css -o ./dist/css/tailwind.css",
     "dev": "ts-node src/app.ts",
     "start-app": "concurrently \"npm run build:css\" \"npm run dev\""
   },
