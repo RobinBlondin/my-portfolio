@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><% title %></title>
+    <link rel="stylesheet" href="/dist/css/tailwind.css">
+</head>
+<body class="h-screen w-screen flex flex-wrap items-center justify-center bg-gradient-to-r from-[#212a31] to-[#2e3944]">
+    <div class="flex flex-col items-center justify-center gap-6">
+        <% if (errorMessage) { %>
+            <div class="bg-red-500 text-white p-4 rounded-lg">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+        <h1 class="text-3xl text-gray-400">Login</h1>
+        <form action="/login" method="post">
+            <div class="flex flex-col justify-center gap-4">
+                <input type="text" name="name" placeholder="Username" class="min-h-[50px] min-w-[200px] rounded-lg bg-[#2c3e50] text-gray-200 p-4">
+                <input type="password" name="password" placeholder="Password" class="min-h-[50px] min-w-[200px] rounded-lg bg-[#2c3e50] text-gray-200 p-4">
+                <button type="submit" class="min-h-[50px] min-w-[200px] rounded-lg bg-[#27ae60] text-gray-200 text-center">Save</button>
+                <a href="/" class="flex items-center justify-center min-h-[50px] min-w-[200px] rounded-lg bg-[#e74c3c] text-gray-200 text-center">Back</a>
+            </div>
+        </form>
+        
+    </div>
+</body>
+</html>

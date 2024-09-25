@@ -1,4 +1,5 @@
 import express from 'express';
+import cookieParser from 'cookie-parser';
 import path from 'path';
 import multer from 'multer';
 import { AppDatasource } from './datasource';
@@ -7,8 +8,9 @@ import { Project } from './entities/Project';
 import { Presentation } from './entities/Presentation';
 import { Skill } from './entities/Skill';
 import { startServer, initializeDatabase, addAdminUser, setUploadsStorage, setPathOfFile } from './utilities';
-import { In } from 'typeorm';
 import { generateMockPresentation, generateMockProject, generateMockSkill } from './mockdata';
+import { login } from './controllers/authController';
+import { authMiddleware } from './middlewares/authMiddleWare';
 
 const app = express();
 
@@ -18,6 +20,8 @@ app.use('/dist', express.static(path.join(__dirname, '..', 'dist')));
 app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());    
+
 
 const userRepo = AppDatasource.getRepository(User);
 const projectRepo = AppDatasource.getRepository(Project);
@@ -43,27 +47,53 @@ app.get('/', async (req, res) => {
     res.render('index', { title: 'My Portfolio', projects: projects, presentation: presentation, skills: skills });
 });
 
-app.get('/admin', (req, res) => {
+app.get('/login', (req, res) => {
+    const errorMessage = req.query.error || null;
+    res.render('login', { title: 'Login', errorMessage });
+});
+
+app.get('/admin', authMiddleware, (req, res) => {
     res.render('admin', { title: 'Admin' });
 });
 
-app.get('/admin/presentation', (req, res) => {
+app.get('/admin/presentation', authMiddleware, (req, res) => {
     res.render('presentation', { title: 'Edit presentation' });
 });
 
-app.get('/admin/project', (req, res) => {
+app.get('/admin/project', authMiddleware, (req, res) => {
     
     res.render('project', { title: 'Add projects' });
 });
 
-app.get('/admin/skill', (req, res) => {
+app.get('/admin/skill', authMiddleware, (req, res, next) => {
     res.render('skill', { title: 'Add skills' });
 });
 
-app.post('/admin/edit-presentation', upload.single('image'), async (req, res) => {
-   
+app.post('/login', async (req, res) => {
+    try {
+        const token = await login(req);
+        
+        res.cookie('token', token, { 
+            httpOnly: true, 
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'strict' 
+        });
+
+        res.redirect('/admin');
+    } catch (error) {
+        const errorMessage = encodeURIComponent((error as Error).message);
+        res.redirect(`/login?error=${errorMessage}`);
+    }
+});
+
+app.post('/logout', (req, res) => {
+    res.clearCookie('token');
+    res.redirect('/');
+});
+
+
+app.post('/admin/edit-presentation', authMiddleware, upload.single('image'), async (req, res) => {
     const { name, description} = req.body;
-    
     const imageUrl = setPathOfFile(req);
     const presentations = await presentationRepo.findBy({name: "Robin Blondin"});
     const presentation = new Presentation(name, imageUrl, description);
@@ -74,11 +104,10 @@ app.post('/admin/edit-presentation', upload.single('image'), async (req, res) =>
 
     presentationRepo.save(presentation);
 
-
     res.redirect('/admin');
 });
 
-app.post('/admin/add-project', upload.single('image'), async (req, res) => {
+app.post('/admin/add-project', authMiddleware, upload.single('image'), async (req, res) => {
     const { name, link} = req.body;
     const imageUrl = setPathOfFile(req);
     const project = new Project(name, imageUrl, link);
@@ -87,7 +116,7 @@ app.post('/admin/add-project', upload.single('image'), async (req, res) => {
     res.redirect('/admin');
 });
 
-app.post('/admin/add-skill', upload.single('image'), async (req, res) => {
+app.post('/admin/add-skill', authMiddleware, upload.single('image'), async (req, res) => {
     const name = req.body.name;
     const imageUrl = setPathOfFile(req);
     const skill = new Skill(name, imageUrl);
