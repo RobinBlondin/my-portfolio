@@ -51,6 +51,7 @@ describe('App Routes', () => {
         expect(response.text).toContain('Mock Skill');
         expect(response.text).toContain('Mock Project');
     });
+    
 
     it('if database is not empty, should render index page with data from database', async () => {
         const mockPresentation = { id: 1, name: "Robin Blondin",  imageUrl: '', description: 'Mock Presentation' };
