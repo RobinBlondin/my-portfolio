@@ -37,14 +37,6 @@ export async function addAdminUser(userRepo: Repository<User>) {
         }    
 }
 
-export function startServer(app: Express) {
-    const PORT = process.env.PORT || 3000;
-
-    app.listen(PORT, () => {
-    console.log(`Server is running`);
-    });
-}
-
 export function setUploadsStorage() {
     const UPLOADS_DIR = path.join(__dirname, '..', 'uploads/');
     if (!fs.existsSync(UPLOADS_DIR)) {
@@ -61,7 +53,15 @@ export function setUploadsStorage() {
 });
 }
 
+export function startServer(app: Express) {
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT);
+    
+}
+
 export function setPathOfFile(req: any) {
     const fileName = req.file?.originalname;
     return `uploads/${fileName}`;
 }
+
+export const upload = multer({ storage: setUploadsStorage() });
