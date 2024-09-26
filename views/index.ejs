@@ -80,45 +80,12 @@
                 <a style="background-image: url('/dist/img/linkedin.png')" href="https://www.linkedin.com/in/robin-wass-blondin-669683290/" class="h-[60px] w-[60px] bg-cover bg-center"></a>
                 <a style="background-image: url('/dist/img/github.png')" href="https://github.com/RobinBlondin" class="h-[50px] w-[50px]"></a>
                 <a style="background-image: url('/dist/img/email.png')" href="mailto:robin.blondin@protonmail.com" class="h-[50px] w-[50px]"></a>
-                <p class="text-[#d3d0d4] text-lg"> Robin Wass Blondin</p>
-                <p class="text-[#d3d0d4] text-lg"> +46734305510</p>
-                <p class="text-[#d3d0d4] text-lg"> robin.blondin@protonmail.com</p>
+                <p class="text-[#d3d0d4] text-lg">Robin Wass Blondin</p>
+                <p class="text-[#d3d0d4] text-lg">+46734305510</p>
+                <p class="text-[#d3d0d4] text-lg">robin.blondin@protonmail.com</p>
                 <a style="background-image: url('/dist/img/key.png')" href="/login" class="h-[30px] w-[30px] bg-cover bg-center"></a>
         </div>   
     </section>
-
-    <script>
-        const scrollContainer = document.getElementById('scrollContainer');
-        const scrollLeftButton = document.getElementById('scrollLeftButton');
-        const scrollRightButton = document.getElementById('scrollRightButton');
-
-        let scrollInterval;
-
-        function startScrolling(direction) {
-            const scrollAmount = 1000;
-            scrollInterval = setInterval(() => {
-                scrollContainer.scrollBy({
-                    left: direction * scrollAmount,
-                    behavior: 'smooth'
-                });
-            }, 10);
-        }
-
-        function stopScrolling() {
-            clearInterval(scrollInterval);
-        }
-
-        scrollLeftButton.addEventListener('mouseenter', () => startScrolling(-1));
-        scrollLeftButton.addEventListener('mousedown', () => startScrolling(-1));
-        scrollLeftButton.addEventListener('mouseup', stopScrolling);
-        scrollLeftButton.addEventListener('mouseleave', stopScrolling);
-        
-        scrollRightButton.addEventListener('mouseenter', () => startScrolling(1));
-        scrollRightButton.addEventListener('mousedown', () => startScrolling(1));
-        scrollRightButton.addEventListener('mouseup', stopScrolling);
-        scrollRightButton.addEventListener('mouseleave', stopScrolling);
-
-    </script>
 </body>
 
 </html>
