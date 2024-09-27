@@ -8,30 +8,30 @@
 </head>
 <body class="flex flex-wrap items-center justify-center bg-gradient-to-r from-[#212a31] to-[#2e3944]">
     <section class="h-auto w-screen flex items-center justify-center">
-        <div class="h-[30vh] md:h-[65vh] screen flex items-center justify-center">
-            <img src="/dist/img/logo2.png" alt="Profile picture" class="">
-                </div>
+        <div style="background-image: url('/dist/img/header.png');" class="h-[30vh] md:h-[65vh] w-screen bg-cover bg-center flex items-center justify-center">
+            <img src="/dist/img/portfolio-logo.png" alt="">
         </div>        
     </section>
 
     <!-- Introduction Section -->
-    <section class="h-auto w-screen flex flex-wrap items-center justify-center p-4">
-        <div class="w-full md:w-10/12 lg:w-8/12 h-[65vh] flex flex-wrap lg:flex-nowrap items-end justify-center">
-                <div class="flex items-center justify-center">
-                    <img src="<%= presentation.imageUrl %>" alt="Profile picture" class="rounded-xl h-3/4 w-3/4 rounded-lg shadow-[0px_6px_30px_rgba(0,0,0,0.9)] ">
-                </div>
+    <section id="intro-section" class="h-auto w-screen 2xl:w-3/4 flex flex-wrap items-center justify-center p-4 gap-10">
+        <div id="intro-main-container" class="w-full h-auto xl:h-[900px] 2xl:h-[800px] flex flex-wrap xl:flex-nowrap items-center justify-center">
+            <div id="intro-image-container"  class="flex items-center justify-center h-[300px] lg:h-[400px] w-full sm:w-3/4 xl:h-[600px] xl:w-1/2 xl:items-end p-4" >
+              <div style="background-image: url('<%= presentation.imageUrl %>')" class="w-4/5 xl:w-2/3 h-4/5 2xl:h-2/3 bg-center bg-cover bg-no-repeat rounded-lg p-4"></div>
+            </div>
 
-            <div class="h-[65vh] w-screen md:w-3/4 flex flex-col items-center justify-end gap-4 gap-10 p-4">
+            <div id="intro-text-container" class="h-[600px] sm:h-[500px] md:h-[600px] w-screen lg:w-1/2 flex flex-col items-center justify-between p-4">
 
-                <div class="rounded-lg h-1/2 md:h-2/5 w-screen md:w-full p-10">
+                <div id="intro-quote" class="rounded-lg h-auto md:h-2/5 p-10">
                     <h1 class="text-3xl md:text-3xl font-bold text-[#748d92]">A problem</h1>
                     <h1 class="text-4xl md:text-5xl font-bold text-[#9a3686]">well stated</h1>
                     <h1 class="text-2xl md:text-4xl font-bold text-gray-400 text-center">is a problem</h1>
                     <h1 class="text-4xl md:text-6xl font-bold text-[#f0ed13] text-left">half solved</h1>
-                    <h1 class="text-right italic text-[#d3d9d4]">- Charles Kettering</h1>
+                    <br>
+                    <h1 class="text-center italic text-[#d3d9d4]">- Charles Kettering</h1>
                 </div>
 
-                <div class="rounded-lg h-auto w-10/12 md:w-full p-4 border-2 border-[#748d92] hover:bg-[#2c3e50]">
+                <div id="intro-about" class="rounded-lg h-auto p-4 border-2 border-[#748d92] hover:bg-[#2c3e50]">
 
                     <p class="text-sm md:text-lg text-[#d3d9d4]">
                         <%= presentation.description %>
@@ -44,12 +44,12 @@
     
     <!-- Project & Skills Section -->
      
-    <section class="h-auto w-full flex flex-col items-center justify-center p-4 mt-[30vh] md:mt-[20vh]">
+    <section id="project-section" class="h-auto w-screen flex flex-col items-center justify-center p-4">
         <!-- Scrollable Projects Section -->
         <h1 class="text-[#d3d0d4] text-2xl font-bold">My Projects</h1>
-        <div id="scrollContainer" class="h-[45vh] w-screen flex items-center justify-start gap-12 p-8 overflow-x-auto hover:overflow-x-scroll scrollbar-thin scrollbar-thumb-[#748d92]">
+        <div id="scrollContainer" class="h-[300px] md:h-[400px] xl:h-[500px] 2xl:h-[600px] w-11/12 flex items-center justify-start gap-12 p-8 overflow-x-auto hover:overflow-x-scroll scrollbar-thin">
             <% projects.forEach(project => { %>
-                    <div class="h-[30vh] w-[300px] md:w-[400px] lg:w-[600px] flex-shrink-0 flex-col items-center justify-center text-center">
+                    <div class="h-4/5 w-[300px] md:w-[400px] lg:w-[600px] flex-shrink-0 flex-col items-center justify-center text-center">
                         <h1 class="text-[#748d92] font-bold mb-4"><%= project.name %></h1>
                         <div 
                             style="background-image: url('<%= project.imageUrl %>');" 
@@ -60,7 +60,7 @@
             <% }) %>
         </div>
         
-        <div class="h-auto w-screen flex flex-col items-center justify-center mt-8 mt-[20vh]">
+        <div class="h-auto w-screen flex flex-col items-center justify-center mt-8 mt-[10vh]">
             <h1 class="text-[#d3d0d4] font-bold text-2xl mb-4">Experience in</h1>
             <div class="h-auto w-10/12 flex flex-wrap items-center justify-center  p-4 gap-4 border-[2px] border-[#748d92] rounded-md">
                 <% skills.forEach(skill => { %>
