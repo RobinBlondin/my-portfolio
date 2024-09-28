@@ -43,11 +43,10 @@
     </section>
     
     <!-- Project & Skills Section -->
-     
     <section id="project-section" class="h-auto w-screen flex flex-col items-center justify-center p-4">
         <!-- Scrollable Projects Section -->
         <h1 class="text-[#d3d0d4] text-2xl font-bold">My Projects</h1>
-        <div id="scrollContainer" class="h-[300px] md:h-[400px] xl:h-[500px] 2xl:h-[600px] w-11/12 flex items-center justify-start gap-12 p-8 overflow-x-auto hover:overflow-x-scroll scrollbar-thin">
+        <div id="scrollContainer" class="h-[300px] md:h-[400px] xl:h-[500px] 2xl:h-[600px] w-11/12 flex items-center justify-start gap-12 p-8 overflow-x-auto hover:overflow-x-scroll scrollbar-thin scrollbar-no-track">
             <% projects.forEach(project => { %>
                     <div class="h-4/5 w-[300px] md:w-[400px] lg:w-[600px] flex-shrink-0 flex-col items-center justify-center text-center">
                         <h1 class="text-[#748d92] font-bold mb-4"><%= project.name %></h1>
@@ -72,7 +71,6 @@
             </div>
         </div>
     </section>
-    
     
     <!-- Contact Section -->
     <section class="h-auto w-screen flex flex-col items-center justify-center flext-wrap md:flex-nowrap bg-[#3d52a0] mt-[10vh] lg:mt-[20vh] rounded-t-lg">
