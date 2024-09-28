@@ -1,6 +1,6 @@
 import router, { Request, Response, NextFunction } from 'express';
 import { authMiddleware } from '../middlewares/authMiddleWare';
-import { setUploadsStorage, setPathOfFile } from '../utilities';
+import { upload, setPathOfFile } from '../utilities';
 import { Presentation } from '../entities/Presentation';
 import { Project } from '../entities/Project';
 import { Skill } from '../entities/Skill';
@@ -8,7 +8,6 @@ import { presentationRepo, projectRepo, skillRepo } from '../repositories';
 import { RedirectError } from '../errors/RedirectError';
 
 const adminRouter = router();
-const upload = setUploadsStorage();
 
 adminRouter.get('/', authMiddleware, (req, res) => {
     res.render('admin', { title: 'Admin' });

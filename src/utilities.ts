@@ -83,3 +83,5 @@ export function setPathOfFile(file: Express.Multer.File) {
     const fileName = file.originalname;
     return `uploads/${fileName}`;
 }
+
+export const upload = setUploadsStorage();
