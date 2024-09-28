@@ -8,8 +8,19 @@
 </head>
 <body class="h-screen w-screen flex flex-wrap items-center justify-center bg-gradient-to-r from-[#212a31] to-[#2e3944]">
     <div class="flex flex-col items-center justify-center gap-6">
+        <% if (errorMessage) { %>
+            <div class="bg-red-500 text-white p-4 rounded-lg">
+                <%= errorMessage %>
+            </div>
+        <% } %>
+    
+        <% if (successMessage) { %>
+            <div class="bg-green-500 text-white p-4 rounded-lg">
+                <%= successMessage %>
+            </div>
+        <% } %>
         <h1 class="text-3xl text-gray-400">Edit presentation</h1>
-        <form action="/admin/edit-presentation" method="post" enctype="multipart/form-data">
+        <form action="/admin/presentation" method="post" enctype="multipart/form-data">
             <div class="flex flex-col justify-center gap-4">
 
                 <input type="text" 
@@ -32,7 +43,7 @@
                         class="hidden">
 
                     <label for="fileInput" 
-                           class="min-h-[50px] min-w-[200px] rounded-lg bg-[#3498db] text-gray-200 text-center cursor-pointer">
+                           class="min-h-[50px] min-w-[200px] rounded-lg bg-[#3498db] text-gray-200 text-center cursor-pointer flex items-center justify-center">
                            Upload image</label>
 
                     <button type="submit" class="min-h-[50px] min-w-[200px] rounded-lg bg-[#27ae60] text-gray-200 text-center">Save</button>

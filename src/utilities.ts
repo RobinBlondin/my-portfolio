@@ -1,13 +1,13 @@
-import { Express } from 'express';
+import { Express, Request } from 'express';
 import { AppDatasource } from "./datasource";
 import { User } from "./entities/User";
 import { Repository } from "typeorm";
 import path from 'path';
-import multer from 'multer';
+import multer, { FileFilterCallback } from 'multer';
 import fs from 'fs';
+import { RedirectError } from './errors/RedirectError';
 
 const userRepo = AppDatasource.getRepository(User);
-
 
 export function initializeDatabase() {
     AppDatasource.initialize()
@@ -39,18 +39,38 @@ export async function addAdminUser(userRepo: Repository<User>) {
 
 export function setUploadsStorage() {
     const UPLOADS_DIR = path.join(__dirname, '..', 'uploads/');
+    
     if (!fs.existsSync(UPLOADS_DIR)) {
         fs.mkdirSync(UPLOADS_DIR, { recursive: true });
     }
 
-    return multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, UPLOADS_DIR);
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname);
-    }
-});
+    const storage = multer.diskStorage({
+        destination: function (req, file, cb) {
+            cb(null, UPLOADS_DIR);
+        },
+        filename: function (req, file, cb) {
+            cb(null, file.originalname);
+        }
+    });
+
+    const filter = function (req: Request, file: Express.Multer.File, cb: FileFilterCallback) {
+        const allowedTypes = /jpeg|jpg|png/;
+        const mimeType = allowedTypes.test(file.mimetype);
+        const extName = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+        const currentUrl = req.originalUrl;
+
+        if (mimeType && extName) {
+            return cb(null, true);
+        } else {
+            cb(new RedirectError('Invalid file type. Only jpg, jpeg, and png files are allowed.', 400, `${currentUrl}?error=Invalid file type`));
+        }
+    };
+
+    return multer({
+        storage: storage,
+        fileFilter: filter,
+        limits: { fileSize: 1024 * 1024 * 5 }
+    });
 }
 
 export function startServer(app: Express) {
@@ -59,9 +79,7 @@ export function startServer(app: Express) {
     
 }
 
-export function setPathOfFile(req: any) {
-    const fileName = req.file?.originalname;
+export function setPathOfFile(file: Express.Multer.File) {
+    const fileName = file.originalname;
     return `uploads/${fileName}`;
 }
-
-export const upload = multer({ storage: setUploadsStorage() });
