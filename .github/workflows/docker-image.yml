@@ -22,6 +22,7 @@ jobs:
     - name: Run Tests
       env:
         PORT: 4000
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: npm test
      
     - uses: mr-smithers-excellent/docker-build-push@v6
