@@ -2,15 +2,17 @@ import dotenv from "dotenv";
 dotenv.config();
 
 import request from "supertest";
+import express from "express";
 import { app } from "../../src/app";
 import { jest } from "@jest/globals";
-import { userRepo } from "../../src/repositories";
-import { User } from "entities/User";
-import { Repository } from "typeorm";
+import { login } from "controllers/authController";
+import router from "routes/auth";
 
 jest.mock("jsonwebtoken");
-jest.mock("../../src/controllers/authController");
-jest.mock("../../src/repositories/userRepo");
+jest.mock("../../src/controllers/authController", () => ({
+  login: jest.fn(),
+}));
+
 jest.mock("../../src/utilities", () => ({
   startServer: jest.fn(() => Promise.resolve()),
   initializeDatabase: jest.fn(() => Promise.resolve()),
@@ -21,7 +23,8 @@ jest.mock("../../src/utilities", () => ({
   },
 }));
 
-const mockedUserRepo = mocked(userRepo, true);
+app.use(express.urlencoded({ extended: false }));
+app.use(router);
 
 describe("Login Routes GET", () => {
   beforeEach(() => {
@@ -102,21 +105,50 @@ describe("Login Routes POST", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.resetAllMocks();
-
-    mockedUserRepo.findOneBy.mockResolvedValue({ id: 1, name: "admin", password: "password" });
   });
 
-    it("should not login with invalid credentials", async () => {
-        const response = await request(app)
-        .post("/login")
-        .send({ username: "admin", password: "invalid-password" })
-        .redirects(1);
+  it('should redirect to /admin and set a cookie on successful login', async () => {
+    const mockToken: string = "valid";
+    (login as jest.MockedFunction<typeof login>).mockResolvedValue(mockToken);
 
-        expect(response.status).toBe(200);
-        expect(response.text).toContain("Invalid credentials");
-    });
+    const response = await request(app)
+      .post("/login")
+      .send({ username: "admin", password: "password" });
+
+      expect(response.status).toBe(302);
+      expect(response.headers.location).toBe('/admin');
+      expect(response.headers['set-cookie']).toBeDefined();
+
+      const cookie = response.headers['set-cookie'][0];
+      expect(cookie).toContain('token=valid');
+      expect(cookie).toContain('HttpOnly');
+      expect(cookie).toContain('SameSite=Strict');
+  });
+
+  it('should redirect to /login with error message if login fails', async () => {
+    const errorMessage = 'Invalid credentials';
+    
+    (login as jest.MockedFunction<typeof login>).mockRejectedValue(new Error(errorMessage));
+
+    const response = await request(app)
+      .post('/login')
+      .send({ name: 'wronguser', password: 'wrongpassword' });
+
+    expect(response.status).toBe(302);
+    expect(response.headers.location).toBe(`/login?error=${encodeURIComponent(errorMessage)}`);
+  });
+
+  it('should redirect to /login with error message if SECRET_KEY is missing', async () => {
+    const errorMessage = 'Internal server error';
+  
+    (login as jest.MockedFunction<typeof login>).mockRejectedValue(new Error(errorMessage));
+
+    const response = await request(app)
+      .post('/login')
+      .send({ name: 'testuser', password: 'password' });
+
+    expect(response.status).toBe(302);
+    expect(response.headers.location).toBe(`/login?error=${encodeURIComponent(errorMessage)}`);
+  });
 });
-function mocked(userRepo: Repository<User>, arg1: boolean) {
-    throw new Error("Function not implemented.");
-}
 
