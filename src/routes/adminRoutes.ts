@@ -50,7 +50,7 @@ adminRouter.post('/presentation', authMiddleware, upload.single('image'), async 
 
     await presentationRepo.save(presentation);
 
-    res.redirect('/admin?success=Presentation updated');
+    res.redirect('/admin/presentation?success=Presentation updated');
     } catch (error) {
         next(error);
     }
@@ -110,7 +110,6 @@ function isInvalidLink(link: string) {
 }
 
 adminRouter.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-    console.error(err.stack);
     if (err instanceof RedirectError) {
         return res.redirect(err.redirectUrl);
     }

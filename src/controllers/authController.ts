@@ -7,7 +7,7 @@ import { AppDatasource } from '../datasource';
 const SECRET_KEY = process.env.SECRET_KEY;
 const userRepo = AppDatasource.getRepository(User);
 
-export const login = async (req: Request) => {
+export const login = async (req: Request): Promise<string> => {
     const { name, password } = req.body;
     const user = await userRepo.findOneBy({ name: name });
 
