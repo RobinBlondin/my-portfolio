@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { Express, Request } from 'express';
 import { AppDatasource } from "./datasource";
 import { User } from "./entities/User";
@@ -6,6 +7,7 @@ import path from 'path';
 import multer, { FileFilterCallback } from 'multer';
 import fs from 'fs';
 import { RedirectError } from './errors/RedirectError';
+import bcrypt from 'bcryptjs';
 
 const userRepo = AppDatasource.getRepository(User);
 
@@ -22,10 +24,11 @@ export function initializeDatabase() {
 
 export async function addAdminUser(userRepo: Repository<User>) {
         const users = await userRepo.findBy({ name: 'admin' });
-    
+
+        const password = bcrypt.hash(process.env.ADMIN_PASS || 'password', 10);
         let user;
         if(users.length === 0) {
-            user = new User('admin', '$2y$10$i3jO4C6aAHhjhj6bWnuf3.1Q/c/x3HtiJDTHV18jO2QLEpGirzkpG');
+            user = new User('admin', await password);
             try {
                 await userRepo.save(user);
                 console.log('User saved');
